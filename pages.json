@@ -97,7 +97,7 @@
 				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
 				"iconPath": "static/img/tabbar/me.png",
 				"selectedIconPath": "static/img/tabbar/meactive.png",
-				"text": "我"
+				"text": "我的"
 			}
 		]
 	}

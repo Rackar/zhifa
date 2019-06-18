@@ -8,7 +8,7 @@
 	export default {
 		data() {
 			return {
-				url: 'http://codingyang.com/leaflet'
+				url: 'https://www.codingyang.com/leaflet'
 			}
 		},
 		onLoad(options) {
