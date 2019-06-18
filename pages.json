@@ -2,15 +2,15 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/tabbar/tabbar-1/tabbar-1",
+			"path": "pages/tabbar/first/first",
 			"style": {
 				"navigationBarTitleText": "导航条预览"
 			}
 		},
 		{
-			"path": "pages/tabbar/tabbar-2/tabbar-2",
+			"path": "pages/tabbar/map/map",
 			"style": {
-				"navigationBarTitleText": "发图文"
+				"navigationBarTitleText": "地图"
 			}
 		},
 		{
@@ -19,14 +19,16 @@
 		},
 		{
 			"path": "pages/tabbar/formInput/formInput",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "巡查开始"
+			}
 		},
 		{
 			"path": "pages/tabbar/tabbar-4/tabbar-4",
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar/tabbar-5/tabbar-5",
+			"path": "pages/tabbar/me/me",
 			"style": {}
 		},
 		{
@@ -61,13 +63,13 @@
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
 		"list": [{
-				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
+				"pagePath": "pages/tabbar/first/first",
 				"iconPath": "static/img/tabbar/home.png",
 				"selectedIconPath": "static/img/tabbar/homeactive.png",
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
+				"pagePath": "pages/tabbar/map/map",
 				"iconPath": "static/img/tabbar/guanzhu.png",
 				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
 				"text": "地图"
@@ -94,7 +96,7 @@
 				"text": "数据"
 			},
 			{
-				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
+				"pagePath": "pages/tabbar/me/me",
 				"iconPath": "static/img/tabbar/me.png",
 				"selectedIconPath": "static/img/tabbar/meactive.png",
 				"text": "我的"

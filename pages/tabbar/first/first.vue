@@ -1,7 +1,9 @@
 <template>
 	<view class="content">
 		通用巡查监管APP
-		
+		<view class="">
+			巡查任务接受，巡查路线记录，巡查数据上报
+		</view>
 	</view>
 </template>
 

@@ -29,7 +29,7 @@
 					人数：
 				</view>
 				<view class="uni-list-cell-db">
-					<input class="uni-input" @input="setChanliang" type="digit" placeholder="公斤" />
+					<input class="uni-input" @input="setChanliang" type="digit" placeholder="位" />
 				</view>
 			</view>
 		</view>
@@ -49,7 +49,7 @@
 		<view class="">
 			{{pos.long}},{{pos.lat}}
 		</view>
-		<button @click='test'>提交保存</button>
+		<button @click='test'>{{btnStart}}</button>
 
 	</view>
 </template>
@@ -82,6 +82,7 @@
 		},
 		data() {
 			return {
+				btnStart:"开始巡查",
 				array: [{
 					name: '步行'
 				}, {
@@ -132,7 +133,14 @@
 				})
 			},
 			test(){
-				
+				if(this.btnStart=="开始巡查")this.beginWalk()
+				else this.stopWalk()
+			},
+			beginWalk(){
+				this.btnStart="结束巡查"
+			},
+			stopWalk(){
+				this.btnStart="开始巡查"
 			}
 		},
 	}
