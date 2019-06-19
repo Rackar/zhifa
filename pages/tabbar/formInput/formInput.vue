@@ -1,22 +1,21 @@
 <template>
 	<view>
 		<view class="">
-			{{fruitName}}
+			{{fruitName}} {{date}}
 		</view>
-		<view class="uni-list">
+		<!-- <view class="uni-list">
 			<view class="uni-list-cell">
 				<view class="uni-list-cell-left">
-					选择方式
+					名称：
 				</view>
 				<view class="uni-list-cell-db">
-					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
-						<view class="uni-input">{{array[index].name}}</view>
-					</picker>
+					<input class="uni-input" focus placeholder="输入巡查名称" />
 				</view>
 			</view>
+			
 			<view class="uni-list-cell">
 				<view class="uni-list-cell-left">
-					选择日期：
+					日期：
 				</view>
 				<view class="uni-list-cell-db">
 					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
@@ -24,20 +23,82 @@
 					</picker>
 				</view>
 			</view>
-			<view class="uni-list-cell">
-				<view class="uni-list-cell-left">
-					人数：
+			
+			
+		</view> -->
+			<form @submit="formSubmit" @reset="formReset">
+                <!-- <view class="uni-form-item uni-column">
+                    <view class="title">switch</view>
+                    <view>
+                        <switch name="switch" />
+                    </view>
+                </view> -->
+               <!-- <view class="uni-form-item uni-column">
+                    <view class="title">radio</view>
+                    <radio-group name="radio">
+                        <label>
+                            <radio value="radio1" />选项一
+                        </label>
+                        <label>
+                            <radio value="radio2" />选项二
+                        </label>
+                    </radio-group>
+                </view> -->
+               <!-- <view class="uni-form-item uni-column">
+                    <view class="title">checkbox</view>
+                    <checkbox-group name="checkbox">
+                        <label>
+                            <checkbox value="checkbox1" />选项一
+                        </label>
+                        <label>
+                            <checkbox value="checkbox2" />选项二
+                        </label>
+                    </checkbox-group>
+                </view> -->
+               <!-- <view class="uni-form-item uni-column">
+                    <view class="title">slider</view>
+                    <slider value="50" name="slider" show-value></slider>
+                </view> -->
+				
+                <view class="uni-form-item uni-column">
+                    <view class="title">名称：</view>
+                    <input class="uni-input" name="name" placeholder="输入本次巡查名称" />
+                </view>
+				<!-- <view class="uni-list-cell">
+					<view class="uni-list-cell-left">
+						日期：
+					</view>
+					<view class="uni-list-cell-db">
+						
+					</view>
+				</view> -->
+				<view class="uni-list-cell">
+					<view class="uni-list-cell-left">
+						选择方式：
+					</view>
+					<view class="uni-list-cell-db">
+						<picker @change="bindPickerChange" :value="index" :range="array" range-key="name" name='type'>
+							<view class="uni-input">{{array[index].name}}</view>
+						</picker>
+					</view>
 				</view>
-				<view class="uni-list-cell-db">
-					<input class="uni-input" @input="setChanliang" type="digit" placeholder="位" />
+				<view class="uni-list-cell">
+					<view class="uni-list-cell-left">
+						人数：
+					</view>
+					<view class="uni-list-cell-db">
+						<input class="uni-input" name='howManypeople' @input="setChanliang" type="digit" placeholder="位" />
+					</view>
 				</view>
-			</view>
-		</view>
-
+                <view class="uni-btn-v">
+                    <button formType="submit">Submit</button>
+                    <button type="default" formType="reset">Reset</button>
+                </view>
+            </form>
 
 	
 
-		<uni-list>
+		<!-- <uni-list>
 			<uni-list-item title="上传图片" note="可以上传9张相关图片" @click="routeTo('upload')"></uni-list-item>
 			<uni-list-item title="联系方式" note="新建或者选择已有联系方式" @click="routeTo('upload')"></uni-list-item>
 		</uni-list>
@@ -48,8 +109,8 @@
 		
 		<view class="">
 			{{pos.long}},{{pos.lat}}
-		</view>
-		<button @click='test'>{{btnStart}}</button>
+		</view> -->
+		<button @click='test'>确定</button>
 
 	</view>
 </template>
@@ -133,15 +194,19 @@
 				})
 			},
 			test(){
-				if(this.btnStart=="开始巡查")this.beginWalk()
-				else this.stopWalk()
+				
+				this.$emit('startClicked')
 			},
-			beginWalk(){
-				this.btnStart="结束巡查"
-			},
-			stopWalk(){
-				this.btnStart="开始巡查"
-			}
+			formSubmit: function(e) {
+            console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
+			var info={userid:null,time:this.date,name:e.detail.value.name,type:this.array[e.detail.value.type],number:parseInt(e.detail.value.howManypeople)}
+			this.$emit('startClicked',info)
+        },
+        formReset: function(e) {
+            console.log('清空数据')
+            this.chosen = ''
+        }
+			
 		},
 	}
 </script>
