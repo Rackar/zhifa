@@ -178,9 +178,9 @@
 			}
 		},
 		onLoad(options) {
-			if (options && options.url) {
-				this.url = options.url;
-			}
+			// if (options && options.url) {
+			// 	this.url = options.url;
+			// }
 		},
 		methods: {
 			getMessage(event) {
@@ -239,15 +239,16 @@
 			},
 			showDrawerOrStopRecord() {
 				if (!this.hasLogin) {
-					// uni.navigateTo({url:'login'})
-					uni.showToast({
-						title:'请登录',
-						complete:function() {
-							uni.switchTab({
-								url: '/pages/tabbar/me/me'
-							})
-						}
-					})
+					// if(true){
+					uni.navigateTo({url:'../login/login'})
+					// uni.showToast({
+					// 	title:'请登录',
+					// 	complete:function() {
+					// 		uni.switchTab({
+					// 			url: '/pages/tabbar/me/me'
+					// 		})
+					// 	}
+					// })
 					
 				} else {
 					if (this.config.isRecording == '结束巡查') {

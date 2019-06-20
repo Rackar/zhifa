@@ -117,10 +117,10 @@
 </template>
 
 <script>
-	    import {
-	    mapState,
-	    mapMutations
-	} from 'vuex'
+	//     import {
+	//     mapState,
+	//     mapMutations
+	// } from 'vuex'
 	
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
@@ -143,9 +143,9 @@
 		return `${year}-${month}-${day}`;
 	}
 	export default {
-		computed: {
-		    ...mapState(['hasLogin', 'forcedLogin'])
-		},
+		// computed: {
+		//     ...mapState(['hasLogin', 'forcedLogin'])
+		// },
 		components: {
 			uniList,
 			uniListItem
