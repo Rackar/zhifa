@@ -18,6 +18,10 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex'
 	import forminput from '../formInput/formInput'
 	import uniDrawer from '../../../components/uni-drawer/uni-drawer.vue';
 
@@ -117,6 +121,9 @@
 
 
 	export default {
+		computed: {
+			...mapState(['hasLogin', 'forcedLogin'])
+		},
 		components: {
 			uniDrawer,
 			forminput
@@ -127,9 +134,13 @@
 				config: {
 					showDrawer: false,
 					isRecording: '开始巡查',
-					currentPolyline:{userid:null,time:null,name:null}
+					currentPolyline: {
+						userid: null,
+						time: null,
+						name: null
+					}
 				},
-				
+
 				url: 'https://www.codingyang.com/leaflet',
 				controls: [{
 					id: 0,
@@ -183,26 +194,39 @@
 				// this.controls[index].iconPath="/static/img/qa.png"
 			},
 			showDrawerOrStopRecord() {
-
-				if (this.config.isRecording == '结束巡查') {
-					this.stopGetPosEverySec()
-					this.config.isRecording = '开始巡查'
-					this.config.showDrawer = false
+				if (!this.hasLogin) {
+					// uni.navigateTo({url:'login'})
+					uni.showToast({
+						title:'请登录',
+						complete:function() {
+							uni.switchTab({
+								url: '/pages/tabbar/me/me'
+							})
+						}
+					})
+					
 				} else {
+					if (this.config.isRecording == '结束巡查') {
+						this.stopGetPosEverySec()
+						this.config.isRecording = '开始巡查'
+						this.config.showDrawer = false
+					} else {
 
-					this.config.showDrawer = true;
+						this.config.showDrawer = true;
 
+					}
 				}
+
 			},
 			StartRecord() {
 				// if (this.isRecording == '结束巡查') {
 				// 	this.stopGetPosEverySec()
 				// 	this.isRecording = '开始巡查'
 				// } else {
-					this.getPosEverySec()
-					this.config.showDrawer = false;
-					this.config.isRecording = '结束巡查'
-					
+				this.getPosEverySec()
+				this.config.showDrawer = false;
+				this.config.isRecording = '结束巡查'
+
 				// }
 			},
 			pickPoints() {

@@ -11,7 +11,7 @@ export default {
 			uni.showTabBarRedDot({
 				index: 3
 			});
-		}, 1000);
+		}, 300);
 	},
 	onShow: function() {
 		console.log('App Show');
