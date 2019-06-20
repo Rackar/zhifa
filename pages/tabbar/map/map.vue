@@ -127,9 +127,14 @@
 				config: {
 					showDrawer: false,
 					isRecording: '开始巡查',
-					currentPolyline:{userid:null,time:null,name:null}
+					currentPolyline: {
+						tripId:null,
+						userid: null,
+						time: null,
+						name: null
+					}
 				},
-				
+
 				url: 'https://www.codingyang.com/leaflet',
 				controls: [{
 					id: 0,
@@ -178,9 +183,52 @@
 				});
 			},
 			controlTaped(control) {
-				var index = control.detail.controlId
-				console.log(this.controls[index])
+				//控件在h5和微信小程序的位置不一样
+				var that=this
+				var index
+				if (control.detail.controlId === undefined) {
+					index = control.controlId
+				} else {
+					index = control.detail.controlId
+				}
+				// var index = control.detail.controlId===undefined || control.controlId 
+				console.log(control, this.controls[index])
 				// this.controls[index].iconPath="/static/img/qa.png"
+				if (index == 0) {
+					uni.request({
+						// url:'https://www.codingyang.com:3001/gps',
+						url: 'http://localhost:3002/gps',
+						data: {
+							tripId:this.config.currentPolyline.tripId,
+							lat: 40,
+							long: 111,
+						},
+						method: "POST",
+						success: function(res) {
+							console.log(res)
+						}
+					})
+				} else if (index == 1) {
+					uni.request({
+						// url:'https://www.codingyang.com:3001/gps',
+						url: 'http://localhost:3002/trip',
+						data: {
+							trip: {
+								userid: 'String',
+								type: 'String',
+								tripType: 'String',
+
+							}
+
+						},
+						method: "POST",
+						success: function(res) {
+							console.log(res.data.data.tripId)
+							that.config.currentPolyline.tripId=res.data.data.tripId;
+						}
+					})
+				}
+
 			},
 			showDrawerOrStopRecord() {
 
@@ -199,10 +247,10 @@
 				// 	this.stopGetPosEverySec()
 				// 	this.isRecording = '开始巡查'
 				// } else {
-					this.getPosEverySec()
-					this.config.showDrawer = false;
-					this.config.isRecording = '结束巡查'
-					
+				this.getPosEverySec()
+				this.config.showDrawer = false;
+				this.config.isRecording = '结束巡查'
+
 				// }
 			},
 			pickPoints() {
