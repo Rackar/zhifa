@@ -150,6 +150,9 @@
 // 
 // 							// this.$store.state.token = token;
 							this.$store.commit("login_saveToken", token);
+							uni.reLaunch({
+								url: '../me/me',
+							});
 // 
 // 							// console.log(this.$route.query);
 // 							let previousUrl = "/";

@@ -27,7 +27,7 @@ const store = new Vuex.Store({
 		login_saveToken(state, data) {
 			state.token = data;
 			uni.setStorageSync("token", data);
-
+			state.hasLogin = true;
 			function parseJwt(token) {
 				var base64Url = token.split(".")[1];
 				var base64 = decodeURIComponent(

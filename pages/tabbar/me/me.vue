@@ -2,7 +2,7 @@
 	<view>
 		<button type="primary" @tap="naviToLogin">登录</button>
 		<view class="">
-			我的个人信息
+			我的个人信息 {{userid}},{{username}}
 		</view>
 		<view class="">
 			我发布的信息：编辑，删除
@@ -13,14 +13,14 @@
 
 <script>
 	// import login from '../login/login.vue';
-	// 	import {
-	// 	mapState,
-	// 	mapMutations
-	// } from 'vuex'
+		import {
+		mapState,
+		mapMutations
+	} from 'vuex'
 	export default {
-		// computed: {
-		//     ...mapState(['hasLogin', 'forcedLogin'])
-		// },
+		computed: {
+		    ...mapState(['hasLogin', 'forcedLogin','userid','username'])
+		},
 		components:{
 			// login
 		},
