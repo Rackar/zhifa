@@ -13,7 +13,9 @@ const store = new Vuex.Store({
 		userName: "",
 		token: "",
 		userid: "",
-		username: ""
+		username: "",
+		recordingPolylines:[],
+		recordingPoints:[]
 	},
 	mutations: {
 		login(state, userName) {
@@ -54,6 +56,7 @@ const store = new Vuex.Store({
 			state.userid = "";
 			state.username = "";
 		},
+		
 	}
 })
 

@@ -13,7 +13,10 @@
 			</view>
 		</uni-drawer>
 		<map class='map' longitude=111.7 latitude=40.8 scale=10 :controls='controls' @controltap='controlTaped' :polyline="polylines"
-		 subkey='PMDBZ-JGEKX-6464E-T76ES-E4TRT-BSFJY'></map>
+		 subkey='PMDBZ-JGEKX-6464E-T76ES-E4TRT-BSFJY'>
+		 <cover-image class="controls-play img" :src="picSrc" @click="play"></cover-image>
+		  <cover-image class="controls-play img2" src="../../../static/img/cam.png" @click="play"></cover-image>
+		   </map>
 	</view>
 </template>
 
@@ -130,6 +133,7 @@
 		},
 		data() {
 			return {
+				picSrc:'../../../static/img/rec.png',
 				circle: null,
 				config: {
 					showDrawer: false,
@@ -183,6 +187,9 @@
 			// }
 		},
 		methods: {
+			play(){
+				this.picSrc='../../../static/img/stop.png'
+			},
 			getMessage(event) {
 				uni.showModal({
 					content: JSON.stringify(event.detail),
@@ -325,5 +332,19 @@
 	.map {
 		width: 750upx;
 		height: 86vh;
+		position: relative;
+	}
+	.controls-play.img{
+		position: absolute;
+		width: 100upx;
+		height: 100upx;
+		right:130upx;
+	}
+	.controls-play.img2{
+		position: absolute;
+		width: 100upx;
+		height: 80upx;
+		right:10upx;
+		top:10upx;
 	}
 </style>
