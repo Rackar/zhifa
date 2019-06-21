@@ -3,6 +3,9 @@ export default {
 	onLaunch: function() {
 		console.log('App Launch');
 
+	var token =  uni.getStorageSync('token');
+    if (token) this.$store.commit("login_saveToken", token);
+	
 		setTimeout(() => {
 			uni.setTabBarBadge({
 				index: 1,
