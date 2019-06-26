@@ -2,7 +2,7 @@
 	<view>
 		<button type="primary" @tap="naviToLogin">登录</button>
 		<view class="">
-			我的个人信息 {{userid}},{{username}}
+			我的个人信息 {{userid}},{{username}}，我的单位：，我的部门： （加入）
 		</view>
 		<view class="">
 			我发布的信息：编辑，删除

@@ -1,6 +1,13 @@
 <template>
+	
 	<view class="content">
-		<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" />
+		<view class="">
+			任务列表：1,2,3，已完成还是未完成 ，时间
+		</view>
+		<view class="">
+			<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" />
+
+		</view>
 	</view>
 </template>
 

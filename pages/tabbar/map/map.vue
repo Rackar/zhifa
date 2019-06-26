@@ -2,10 +2,10 @@
 	<view>
 		<!-- <web-view :src="url" @message="getMessage"></web-view> -->
 		<!-- 暂时不用外联leaflet地图的方式，测试内置地图组件 -->
-		<view class="">
+		<!-- <view class="">
 			<button type="primary" @tap="showDrawerOrStopRecord">{{config.isRecording}}</button>
 			<button type="primary" @tap="pickPoints">点位选取</button>
-		</view>
+		</view> -->
 		<uni-drawer :visible="config.showDrawer" mode='right' @close="config.showDrawer=false">
 			<view style="padding:30upx;">
 				<view class="uni-title">输入信息</view>
@@ -15,7 +15,7 @@
 		<map class='map' longitude=111.7 latitude=40.8 scale=10 :controls='controls' @controltap='controlTaped' :polyline="polylines"
 		 subkey='PMDBZ-JGEKX-6464E-T76ES-E4TRT-BSFJY'>
 		 <cover-image class="controls-play img" :src="picSrc" @click="play"></cover-image>
-		  <cover-image class="controls-play img2" src="../../../static/img/cam.png" @click="play"></cover-image>
+		  <cover-image class="controls-play img2" src="../../../static/img/cam.png" ></cover-image>
 		   </map>
 	</view>
 </template>
@@ -125,7 +125,7 @@
 
 	export default {
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin'])
+			...mapState(['hasLogin', 'forcedLogin','record'])
 		},
 		components: {
 			uniDrawer,
@@ -189,6 +189,17 @@
 		methods: {
 			play(){
 				this.picSrc='../../../static/img/stop.png'
+				// uni.navigateTo({url:'../formInput/formInput'})
+				
+				if(this.record.starting)
+				{
+					this.$store.dispatch('endLoop')
+				}
+				else{
+					this.$store.dispatch('startLoop')
+				}
+				
+				
 			},
 			getMessage(event) {
 				uni.showModal({
@@ -245,6 +256,7 @@
 
 			},
 			showDrawerOrStopRecord() {
+				
 				if (!this.hasLogin) {
 					// if(true){
 					uni.navigateTo({url:'../login/login'})
@@ -263,7 +275,7 @@
 						this.config.isRecording = '开始巡查'
 						this.config.showDrawer = false
 					} else {
-
+						this.picSrc='../../../static/img/stop.png'
 						this.config.showDrawer = true;
 
 					}

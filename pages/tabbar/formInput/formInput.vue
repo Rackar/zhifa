@@ -218,6 +218,13 @@
             console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 			var info={userid:null,time:this.date,name:e.detail.value.name,type:this.array[e.detail.value.type],number:parseInt(e.detail.value.howManypeople)}
 			this.$emit('startClicked',info)
+			this.$store.commit('startRecord',info)
+			// uni.navigateTo({
+			// 	url: './ma',
+			// 	success: res => {},
+			// 	fail: () => {},
+			// 	complete: () => {}
+			// });
         },
         formReset: function(e) {
             console.log('清空数据')

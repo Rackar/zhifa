@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+		
 const store = new Vuex.Store({
 	state: {
 		/**
@@ -14,10 +15,55 @@ const store = new Vuex.Store({
 		token: "",
 		userid: "",
 		username: "",
-		recordingPolylines:[],
-		recordingPoints:[]
+		recordingPolyline: {},
+		recordingPoints: [],
+		recordRepeatHandle: {},
+		record: {
+			starting: false,
+			name: "",
+			type: "",
+			time: '',
+			number: 0,
+			userid: ''
+		}
+	},
+	actions: {
+		async startLoop({
+			commit,
+			state,
+			
+		}) {
+			state.record.starting=true;
+			  state.recordRepeatHandle =  setInterval(() => {
+				  uni.getLocation({
+					type: "gcj02",
+					success: function (res){
+						console.log(res)
+					}
+				})
+				
+				
+				// commit('increment')
+			}, 1000)
+		},
+		endLoop({
+			
+			state
+		}) {
+			state.record.starting=false;
+			clearInterval(state.recordRepeatHandle);
+		}
 	},
 	mutations: {
+		startRecord(state, data) {
+			state.record = { ...data,
+				starting: true
+			};
+
+		},
+		gotLocation(pos){
+			console.log(pos)
+		},
 		login(state, userName) {
 			state.userName = userName || '新用户';
 			state.hasLogin = true;
@@ -30,6 +76,7 @@ const store = new Vuex.Store({
 			state.token = data;
 			uni.setStorageSync("token", data);
 			state.hasLogin = true;
+
 			function parseJwt(token) {
 				var base64Url = token.split(".")[1];
 				var base64 = decodeURIComponent(
@@ -56,7 +103,7 @@ const store = new Vuex.Store({
 			state.userid = "";
 			state.username = "";
 		},
-		
+
 	}
 })
 
