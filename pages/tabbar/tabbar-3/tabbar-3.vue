@@ -28,22 +28,22 @@
 			return {
 				active: false,
 				fruitOptions: [{
-					image: '../../../static/img/xuncha/huanbao.jpg',
+					image: '/static/img/xuncha/huanbao.jpg',
 					text: '环保'
 				}, {
-					image: '../../../static/img/xuncha/shengtai.jpg',
+					image: '/static/img/xuncha/shengtai.jpg',
 					text: '生态'
 				}, {
-					image: '../../../static/img/xuncha/huanbao.jpg',
+					image: '/static/img/xuncha/huanbao.jpg',
 					text: '环保'
 				}, {
-					image: '../../../static/img/xuncha/shengtai.jpg',
+					image: '/static/img/xuncha/shengtai.jpg',
 					text: '生态'
 				}, {
-					image: '../../../static/img/xuncha/huanbao.jpg',
+					image: '/static/img/xuncha/huanbao.jpg',
 					text: '环保'
 				}, {
-					image: '../../../static/img/xuncha/shengtai.jpg',
+					image: '/static/img/xuncha/shengtai.jpg',
 					text: '生态'
 				}],
 				

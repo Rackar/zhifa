@@ -38,7 +38,8 @@ const store = new Vuex.Store({
 				  uni.getLocation({
 					type: "gcj02",
 					success: function (res){
-						console.log(res)
+						// console.log(res)
+						commit('gotPositionResult',res)
 					}
 				})
 				
@@ -51,6 +52,9 @@ const store = new Vuex.Store({
 			state
 		}) {
 			state.record.starting=false;
+			state.recordingPolyline={
+				points:state.recordingPoints
+			}
 			clearInterval(state.recordRepeatHandle);
 		}
 	},
@@ -61,8 +65,9 @@ const store = new Vuex.Store({
 			};
 
 		},
-		gotLocation(pos){
+		gotPositionResult(state,pos){
 			console.log(pos)
+			state.recordingPoints.push(pos)
 		},
 		login(state, userName) {
 			state.userName = userName || '新用户';

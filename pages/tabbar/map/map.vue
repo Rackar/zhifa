@@ -188,15 +188,17 @@
 		},
 		methods: {
 			play(){
-				this.picSrc='../../../static/img/stop.png'
+				
 				// uni.navigateTo({url:'../formInput/formInput'})
 				
 				if(this.record.starting)
 				{
 					this.$store.dispatch('endLoop')
+					this.picSrc='../../../static/img/rec.png'
 				}
 				else{
 					this.$store.dispatch('startLoop')
+					this.picSrc='../../../static/img/stop.png'
 				}
 				
 				
