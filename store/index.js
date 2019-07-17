@@ -38,7 +38,14 @@ const store = new Vuex.Store({
 				  uni.getLocation({
 					type: "gcj02",
 					success: function (res){
-						// console.log(res)
+						var isSamePoint=false
+						if(state.recordingPoints.length==0)
+						{
+						}else
+						{
+							isSamePoint=(res.latitude==state.recordingPoints[state.recordingPoints.length-1].latitude &&res.longitude==state.recordingPoints[state.recordingPoints.length-1].longitude)
+						}
+						if(!isSamePoint)
 						commit('gotPositionResult',res)
 					}
 				})
@@ -53,8 +60,11 @@ const store = new Vuex.Store({
 		}) {
 			state.record.starting=false;
 			state.recordingPolyline={
-				points:state.recordingPoints
+				points:state.recordingPoints,
+				color: "#FF0000DD",
+				width: 2
 			}
+			console.log(state)
 			clearInterval(state.recordRepeatHandle);
 		}
 	},

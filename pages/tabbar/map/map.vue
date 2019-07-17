@@ -12,7 +12,7 @@
 				<forminput @startClicked="StartRecord"></forminput>
 			</view>
 		</uni-drawer>
-		<map class='map' longitude=111.7 latitude=40.8 scale=10 :controls='controls' @controltap='controlTaped' :polyline="polylines"
+		<map id='mymap' class='map' longitude=111.7 latitude=40.8 scale=10 :controls='controls' @controltap='controlTaped' :polyline="[recordingPolyline]"
 		 subkey='PMDBZ-JGEKX-6464E-T76ES-E4TRT-BSFJY'>
 		 <cover-image class="controls-play img" :src="picSrc" @click="play"></cover-image>
 		  <cover-image class="controls-play img2" src="../../../static/img/cam.png" ></cover-image>
@@ -125,7 +125,13 @@
 
 	export default {
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin','record'])
+			...mapState(['hasLogin', 'forcedLogin','record','recordingPolyline','recordingPoints'])
+		},
+		watch: {
+			recordingPoints(newValue, oldValue) {
+				var point=newValue[newValue.length-1]
+				this.mapObject.setCenter( new plus.maps.Point( point.longitude, point.latitude ) )
+			}
 		},
 		components: {
 			uniDrawer,
@@ -133,6 +139,7 @@
 		},
 		data() {
 			return {
+				mapObject:{},
 				picSrc:'../../../static/img/rec.png',
 				circle: null,
 				config: {
@@ -185,6 +192,15 @@
 			// if (options && options.url) {
 			// 	this.url = options.url;
 			// }
+			
+			
+		},
+		onReady() {
+			var context = uni.createMapContext('mymap',this)
+			var ob = context.$getAppMap()
+			console.log(ob)
+			this.mapObject=ob
+			// ob.setCenter( new plus.maps.Point( 118.123, 35.456 ) )
 		},
 		methods: {
 			play(){
@@ -345,7 +361,7 @@
 <style>
 	.map {
 		width: 750upx;
-		height: 86vh;
+		height: 100vh;
 		position: relative;
 	}
 	.controls-play.img{
