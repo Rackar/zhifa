@@ -76,6 +76,25 @@ const store = new Vuex.Store({
 				}
 			});
 
+		},
+		uploadPolyline({
+			commit,
+			state,
+
+		},data){
+			uni.request({
+				// url:'https://www.codingyang.com:3001/gps',
+				url: 'http://localhost:3002/gps',
+				data: {
+					tripId:this.config.currentPolyline.tripId,
+					lat: 40,
+					long: 111,
+				},
+				method: "POST",
+				success: function(res) {
+					console.log(res)
+				}
+			})
 		}
 	},
 	mutations: {

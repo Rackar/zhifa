@@ -11,6 +11,7 @@
         "modules" : {
             "Maps" : {}
         },
+        "runmode" : "liberate",
         /* 模块配置 */
         "distribute" : {
             /* 应用发布信息 */
@@ -48,7 +49,7 @@
                 "maps" : {
                     "amap" : {
                         "appkey_ios" : "adc515e308f651aea13aff9f75027d66",
-                        "appkey_android" : "e0323b2e30659b72f4fa0e16aaa7fb10"
+                        "appkey_android" : "44c8520f5cd3efa01563b4816648423c"
                     }
                 }
             },
