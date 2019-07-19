@@ -12,7 +12,7 @@
 				<forminput @startClicked="StartRecord"></forminput>
 			</view>
 		</uni-drawer>
-		<map id='mymap' class='map' longitude=111.7 latitude=40.8 scale=10 :controls='controls' @controltap='controlTaped' :polyline="[recordingPolyline]"
+		<map id='mymap' class='map' longitude=111.7 latitude=40.8 :scale="scale" :controls='controls' @controltap='controlTaped' :polyline="[recordingPolyline]"
 		 subkey='PMDBZ-JGEKX-6464E-T76ES-E4TRT-BSFJY'>
 		 <cover-image class="controls-play img" :src="picSrc" @click="play"></cover-image>
 		  <cover-image class="controls-play img2" src="../../../static/img/cam.png" ></cover-image>
@@ -125,11 +125,12 @@
 
 	export default {
 		computed: {
-			...mapState(['hasLogin', 'forcedLogin','record','recordingPolyline','recordingPoints'])
+			...mapState(['hasLogin', 'forcedLogin','record','recordingPolyline','recordingPoints','record'])
 		},
 		watch: {
 			recordingPoints(newValue, oldValue) {
 				var point=newValue[newValue.length-1]
+				if(point)
 				this.mapObject.setCenter( new plus.maps.Point( point.longitude, point.latitude ) )
 			}
 		},
@@ -139,6 +140,7 @@
 		},
 		data() {
 			return {
+				scale:15,
 				mapObject:{},
 				picSrc:'../../../static/img/rec.png',
 				circle: null,
@@ -195,11 +197,33 @@
 			
 			
 		},
+		onShow() {
+			console.log('1show')
+			if(!this.record.starting)
+			this.$store.commit('initMapPolylines')
+			
+			
+		},
 		onReady() {
+			console.log('1ready')
 			var context = uni.createMapContext('mymap',this)
 			var ob = context.$getAppMap()
 			console.log(ob)
 			this.mapObject=ob
+			uni.getLocation({
+				type: "gcj02",
+				success: function(res) {
+					console.log(res)
+					ob.setCenter( new plus.maps.Point( res.longitude, res.latitude ) )
+					// var isSamePoint = false
+					// if (state.recordingPoints.length == 0) {} else {
+					// 	isSamePoint = (res.latitude == state.recordingPoints[state.recordingPoints.length - 1].latitude && res.longitude ==
+					// 		state.recordingPoints[state.recordingPoints.length - 1].longitude)
+					// }
+					// if (!isSamePoint)
+					// 	commit('gotPositionResult', res)
+				}
+			})
 			// ob.setCenter( new plus.maps.Point( 118.123, 35.456 ) )
 		},
 		methods: {

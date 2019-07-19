@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-		
+
 const store = new Vuex.Store({
 	state: {
 		/**
@@ -15,6 +15,7 @@ const store = new Vuex.Store({
 		token: "",
 		userid: "",
 		username: "",
+		savedPolylins: [],
 		recordingPolyline: {},
 		recordingPoints: [],
 		recordRepeatHandle: {},
@@ -31,53 +32,79 @@ const store = new Vuex.Store({
 		async startLoop({
 			commit,
 			state,
-			
+
 		}) {
-			state.record.starting=true;
-			  state.recordRepeatHandle =  setInterval(() => {
-				  uni.getLocation({
+			state.record.starting = true;
+			state.recordRepeatHandle = setInterval(() => {
+				uni.getLocation({
 					type: "gcj02",
-					success: function (res){
-						var isSamePoint=false
-						if(state.recordingPoints.length==0)
-						{
-						}else
-						{
-							isSamePoint=(res.latitude==state.recordingPoints[state.recordingPoints.length-1].latitude &&res.longitude==state.recordingPoints[state.recordingPoints.length-1].longitude)
+					success: function(res) {
+						var isSamePoint = false
+						if (state.recordingPoints.length == 0) {} else {
+							isSamePoint = (res.latitude == state.recordingPoints[state.recordingPoints.length - 1].latitude && res.longitude ==
+								state.recordingPoints[state.recordingPoints.length - 1].longitude)
 						}
-						if(!isSamePoint)
-						commit('gotPositionResult',res)
+						if (!isSamePoint)
+							commit('gotPositionResult', res)
 					}
 				})
-				
-				
+
+
 				// commit('increment')
 			}, 1000)
 		},
 		endLoop({
-			
+
 			state
 		}) {
-			state.record.starting=false;
-			state.recordingPolyline={
-				points:state.recordingPoints,
+			state.record.starting = false;
+			state.recordingPolyline = {
+				points: state.recordingPoints,
 				color: "#FF0000DD",
-				width: 2
+				width: 3
 			}
+			
 			console.log(state)
 			clearInterval(state.recordRepeatHandle);
+			state.savedPolylins.push(state.recordingPolyline);
+			uni.setStorage({
+				key: 'savedPolylins',
+				data: state.savedPolylins,
+				success: function() {
+					console.log('save polylins success');
+					state.recordingPoints=[];
+				}
+			});
+
 		}
 	},
 	mutations: {
+		initMapPolylines(state) {
+			uni.getStorage({
+				key: 'savedPolylins',
+				success: function(res) {
+					console.log(res.data);
+					if(res.data&&res.data.length){
+						state.savedPolylins=res.data
+						state.recordingPolyline=res.data[0]
+					}
+				}
+			});
+		},
 		startRecord(state, data) {
 			state.record = { ...data,
 				starting: true
 			};
 
 		},
-		gotPositionResult(state,pos){
+		gotPositionResult(state, pos) {
 			console.log(pos)
 			state.recordingPoints.push(pos)
+			state.recordingPolyline = {
+				points: state.recordingPoints,
+				color: "#FF0000DD",
+				width: 3
+			}
 		},
 		login(state, userName) {
 			state.userName = userName || '新用户';
